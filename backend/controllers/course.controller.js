@@ -114,41 +114,7 @@ export const courseDetails = async (req, res) => {
   }
 };
 
-// ✅ Buy Course (Now Stores Purchase & Allows PDF Access)
-// export const buyCourses = async (req, res) => {
-//   const { userId } = req;
-//   const { courseId } = req.params;
 
-//   try {
-//     const course = await Course.findById(courseId);
-//     if (!course) {
-//       return res.status(404).json({ errors: "Course not found" });
-//     }
-
-//     const existingPurchase = await Purchase.findOne({ userId, courseId });
-//     if (existingPurchase) {
-//       return res.status(400).json({ errors: "User has already purchased this course" });
-//     }
-
-//     // ✅ Stripe Payment Processing
-//     const paymentIntent = await stripe.paymentIntents.create({
-//       amount: course.price * 100, // Convert to cents
-//       currency: "usd",
-//       payment_method_types: ["card"],
-//     });
-
-//     // ✅ Store Purchase Record
-//     await Purchase.create({ userId, courseId });
-
-//     res.status(201).json({
-//       message: "Course purchased successfully",
-//       clientSecret: paymentIntent.client_secret,
-//     });
-//   } catch (error) {
-//     console.error("Error in course buying:", error);
-//     res.status(500).json({ error: "Error in course buying" });
-//   }
-// };
 export const buyCourses = async (req, res) => {
   const { userId } = req;
   const { courseId } = req.params;
@@ -241,41 +207,7 @@ export const deleteCourse = async (req, res) => {
         console.log("error to get courses", error);
       }
     };
-    // export const updateCourse = async (req, res) => {
-    //     const adminId = req.adminId;
-    //     const { courseId } = req.params;
-    //     const { title, description, price, image } = req.body;
-    //     try {
-    //       const courseSearch = await Course.findById(courseId);
-    //       if (!courseSearch) {
-    //         return res.status(404).json({ errors: "Course not found" });
-    //       }
-    //       const course = await Course.findOneAndUpdate(
-    //         {
-    //           _id: courseId,
-    //           creatorId: adminId,
-    //         },
-    //         {
-    //           title,
-    //           description,
-    //           price,
-    //           image: {
-    //             public_id: image?.public_id,
-    //             url: image?.url,
-    //           },
-    //         }
-    //       );
-    //       if (!course) {
-    //         return res
-    //           .status(404)
-    //           .json({ errors: "can't update, created by other admin" });
-    //       }
-    //       res.status(201).json({ message: "Course updated successfully", course });
-    //     } catch (error) {
-    //       res.status(500).json({ errors: "Error in course updating" });
-    //       console.log("Error in course updating ", error);
-    //     }
-    //   };
+  
     export const updateCourse = async (req, res) => {
       const adminId = req.adminId;
       const { courseId } = req.params;

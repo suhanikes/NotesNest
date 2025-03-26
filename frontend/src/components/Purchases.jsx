@@ -81,7 +81,7 @@ function Purchases() {
             <li><Link to="/" className="flex items-center"><RiHome2Fill className="mr-2" /> Home</Link></li>
             <li><Link to="/courses" className="flex items-center"><FaDiscourse className="mr-2" /> Courses</Link></li>
             <li><a href="#" className="flex items-center text-blue-500"><FaDownload className="mr-2" /> Purchases</a></li>
-            <li><Link to="/settings" className="flex items-center"><IoMdSettings className="mr-2" /> Settings</Link></li>
+          
             <li>
               {isLoggedIn ? (
                 <button onClick={handleLogout} className="flex items-center"><IoLogOut className="mr-2" /> Logout</button>

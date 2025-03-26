@@ -106,9 +106,7 @@ function Courses() {
               </a>
             </li>
             <li className="mb-4">
-              <a href="#" className="flex items-center">
-              <IoMdSettings className="mr-2" /> Settings
-              </a>
+            
             </li>
             <li>
               {isLoggedIn ? (
