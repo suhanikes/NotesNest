@@ -93,24 +93,44 @@ export const logout = (req, res) => {
   }
 };
 
+// export const purchases = async (req, res) => {
+//   const userId = req.user.id;
+
+//   try {
+//     const purchased = await Purchase.find({ userId });
+
+//     let purchasedCourseId = [];
+
+//     for (let i = 0; i < purchased.length; i++) {
+//       purchasedCourseId.push(purchased[i].courseId);
+//     }
+//     const courseData = await Course.find({
+//       _id: { $in: purchasedCourseId },
+//     });
+    
+//     res.status(200).json({ purchased, courseData });
+//   } catch (error) {
+//     res.status(500).json({ errors: "Error in purchases" });
+//     console.log("Error in purchase", error);
+//   }
+// };
 export const purchases = async (req, res) => {
-  const userId = req.userId;
+  const userId = req.user.id; // ✅ Correctly accessing the user ID
 
   try {
     const purchased = await Purchase.find({ userId });
 
-    let purchasedCourseId = [];
-
-    for (let i = 0; i < purchased.length; i++) {
-      purchasedCourseId.push(purchased[i].courseId);
+    if (!purchased.length) {
+      return res.status(404).json({ message: "No purchases found" });
     }
-    const courseData = await Course.find({
-      _id: { $in: purchasedCourseId },
-    });
+
+    const purchasedCourseIds = purchased.map((p) => p.courseId); // Simplified extraction
+
+    const courseData = await Course.find({ _id: { $in: purchasedCourseIds } });
 
     res.status(200).json({ purchased, courseData });
   } catch (error) {
+    console.error("Error in fetching purchases:", error);
     res.status(500).json({ errors: "Error in purchases" });
-    console.log("Error in purchase", error);
   }
 };
