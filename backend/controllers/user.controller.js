@@ -94,7 +94,7 @@ export const logout = (req, res) => {
 };
 
 export const purchases = async (req, res) => {
-  const userId = req.user.id;
+  const userId = req.userId;
 
   try {
     const purchased = await Purchase.find({ userId });
