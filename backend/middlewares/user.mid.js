@@ -14,9 +14,8 @@ function userMiddleware(req, res, next) {
   try {
     const decoded = jwt.verify(token, config.JWT_USER_PASSWORD);
     console.log(decoded);
-    //req.userId = decoded.id;
-    req.user = { id: decoded.id }; // ✅ Assign to `req.user.id`
-
+    req.userId = decoded.id;
+    
     next();
   } catch (error) {
     return res.status(401).json({ errors: "Invalid token or expired" });
