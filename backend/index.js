@@ -26,33 +26,33 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-// const allowedOrigins = [
-//   "https://notes-nest.vercel.app", // Your frontend URL on Vercel
-//   "http://localhost:3000", // For local testing
-// ];
-
 // app.use(
 //   cors({
-//     origin: function (origin, callback) {
-//       if (!origin || allowedOrigins.includes(origin)) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error("Not allowed by CORS"));
-//       }
-//     },
+//     origin: process.env.FRONTEND_URL,
 //     credentials: true,
 //     methods: ["GET", "POST", "PUT", "DELETE"],
 //     allowedHeaders: ["Content-Type", "Authorization"],
 //   })
 // );
+const allowedOrigins = [
+  "https://notes-nest1.vercel.app", // Your frontend URL on Vercel
+  "http://localhost:3000", // For local testing
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 
 
