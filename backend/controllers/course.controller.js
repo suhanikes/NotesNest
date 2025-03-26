@@ -241,41 +241,73 @@ export const deleteCourse = async (req, res) => {
         console.log("error to get courses", error);
       }
     };
+    // export const updateCourse = async (req, res) => {
+    //     const adminId = req.adminId;
+    //     const { courseId } = req.params;
+    //     const { title, description, price, image } = req.body;
+    //     try {
+    //       const courseSearch = await Course.findById(courseId);
+    //       if (!courseSearch) {
+    //         return res.status(404).json({ errors: "Course not found" });
+    //       }
+    //       const course = await Course.findOneAndUpdate(
+    //         {
+    //           _id: courseId,
+    //           creatorId: adminId,
+    //         },
+    //         {
+    //           title,
+    //           description,
+    //           price,
+    //           image: {
+    //             public_id: image?.public_id,
+    //             url: image?.url,
+    //           },
+    //         }
+    //       );
+    //       if (!course) {
+    //         return res
+    //           .status(404)
+    //           .json({ errors: "can't update, created by other admin" });
+    //       }
+    //       res.status(201).json({ message: "Course updated successfully", course });
+    //     } catch (error) {
+    //       res.status(500).json({ errors: "Error in course updating" });
+    //       console.log("Error in course updating ", error);
+    //     }
+    //   };
     export const updateCourse = async (req, res) => {
-        const adminId = req.adminId;
-        const { courseId } = req.params;
-        const { title, description, price, image } = req.body;
-        try {
-          const courseSearch = await Course.findById(courseId);
-          if (!courseSearch) {
-            return res.status(404).json({ errors: "Course not found" });
-          }
-          const course = await Course.findOneAndUpdate(
-            {
-              _id: courseId,
-              creatorId: adminId,
-            },
-            {
-              title,
-              description,
-              price,
-              image: {
-                public_id: image?.public_id,
-                url: image?.url,
-              },
-            }
-          );
-          if (!course) {
-            return res
-              .status(404)
-              .json({ errors: "can't update, created by other admin" });
-          }
-          res.status(201).json({ message: "Course updated successfully", course });
-        } catch (error) {
-          res.status(500).json({ errors: "Error in course updating" });
-          console.log("Error in course updating ", error);
+      const adminId = req.adminId;
+      const { courseId } = req.params;
+      const { title, description, price, image } = req.body;
+    
+      try {
+        const course = await Course.findOne({ _id: courseId, creatorId: adminId });
+        if (!course) {
+          return res.status(404).json({ errors: "Course not found or not created by you" });
         }
-      };
+    
+        // Preserve the existing image if no new image is provided
+        const updatedImage = image && image.public_id ? image : course.image;
+    
+        const updatedCourse = await Course.findByIdAndUpdate(
+          courseId,
+          {
+            title,
+            description,
+            price,
+            image: updatedImage,
+          },
+          { new: true }
+        );
+    
+        res.status(200).json({ message: "Course updated successfully", updatedCourse });
+      } catch (error) {
+        console.error("Error in course updating ", error);
+        res.status(500).json({ errors: "Error in course updating" });
+      }
+    };
+    
       export const uploadCoursePDF = async (req, res) => {
         try {
           const adminId = req.adminId;

@@ -17,7 +17,7 @@ function AdminLogin() {
     console.log({ password });
     try {
       const response = await axios.post(
-       `${ BACKEND_URL }1/admin/login`,
+       `${ BACKEND_URL }/admin/login`,
         {
           email,
           password,
