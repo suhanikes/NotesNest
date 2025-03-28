@@ -99,42 +99,51 @@ function Home() {
       <div className="h-[1250px] md:h-[1050px] text-white container mx-auto">
         {/* Header */}
         <header className="flex items-center justify-between p-6 ">
-          <div className="flex items-center space-x-2">
-            <img
-              src={logo}
-              alt=""
-              className="w-7 h-7 md:w-10 md:h-10 rounded-full"
-            />
-            <h1 className="md:text-2xl text-orange-500 font-bold">
-            NotesNest
-            </h1>
-          </div>
-          <div className="space-x-4">
-            {isLoggedIn ? (
-              <button
-                onClick={handleLogout}
-                className="bg-transparent text-white text-xs md:text-lg md:py-2 md:px-4 p-2 border border-white rounded"
-              >
-                Logout
-              </button>
-            ) : (
-              <>
-                <Link
-                  to={"/login"}
-                  className="bg-transparent text-white text-xs md:text-lg md:py-2 md:px-4 p-2 border border-white rounded"
-                >
-                  Login
-                </Link>
-                <Link
-                  to={"/signup"}
-                  className="bg-transparent text-white text-xs md:text-lg md:py-2 md:px-4 p-2 border border-white rounded"
-                >
-                  Signup
-                </Link>
-              </>
-            )}
-          </div>
-        </header>
+  <div className="flex items-center space-x-2">
+    <img
+      src={logo}
+      alt=""
+      className="w-7 h-7 md:w-10 md:h-10 rounded-full"
+    />
+    <h1 className="md:text-2xl text-orange-500 font-bold">
+      NotesNest
+    </h1>
+  </div>
+  
+  {/* Navigation Buttons */}
+  <div className="space-x-4">
+    <Link
+      to={"/admin/signup"}
+      className="bg-transparent text-white text-xs md:text-lg md:py-2 md:px-4 p-2 border border-white rounded"
+    >
+      Admin Signup
+    </Link>
+
+    {isLoggedIn ? (
+      <button
+        onClick={handleLogout}
+        className="bg-transparent text-white text-xs md:text-lg md:py-2 md:px-4 p-2 border border-white rounded"
+      >
+        Logout
+      </button>
+    ) : (
+      <>
+        <Link
+          to={"/login"}
+          className="bg-transparent text-white text-xs md:text-lg md:py-2 md:px-4 p-2 border border-white rounded"
+        >
+          Login
+        </Link>
+        <Link
+          to={"/signup"}
+          className="bg-transparent text-white text-xs md:text-lg md:py-2 md:px-4 p-2 border border-white rounded"
+        >
+          Signup
+        </Link>
+      </>
+    )}
+  </div>
+</header>
 
         {/* Main section */}
         <section className="text-center py-20">
