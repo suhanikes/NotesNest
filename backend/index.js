@@ -29,7 +29,7 @@ app.use(
 
 
 const allowedOrigins = [
-  "https://notes-nest-website.vercel.app", // Your frontend on Vercel
+  "https://notes-nest.vercel.app/", // Your frontend on Vercel
   "http://localhost:3000" // Local development
 ];
 
