@@ -26,14 +26,37 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
+
+
+const allowedOrigins = [
+  "https://notes-nest-website.vercel.app", // Your frontend on Vercel
+  "http://localhost:3000" // Local development
+];
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+
+// app.use(
+//   cors({
+//     origin: process.env.FRONTEND_URL,
+//     credentials: true,
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   })
+//);
 // const allowedOrigins = [
 //   "https://notes-nest1.vercel.app", // Your frontend URL on Vercel
 //   "http://localhost:3000", // For local testing
